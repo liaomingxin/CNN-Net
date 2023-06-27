@@ -10,10 +10,8 @@ class SignatureDataset(Dataset):
         self.fake_dir = fake_dir
         self.transform = transform
         
-        self.real_images = [(os.path.join(self.real_dir, str(i), image), 1) for i in range(402) if os.path.exists(os.path.join(self.real_dir, str(i))) for image in os.listdir(os.path.join(self.real_dir, str(i)))]
-        self.fake_images = [(os.path.join(self.fake_dir, str(i), image), 0) for i in range(402) if os.path.exists(os.path.join(self.fake_dir, str(i))) for image in os.listdir(os.path.join(self.fake_dir, str(i)))]
-        # self.real_images = [(os.path.join(self.real_dir, str(i), image), 1) for i in range(402) for image in os.listdir(os.path.join(self.real_dir, str(i)))]
-        # self.fake_images = [(os.path.join(self.fake_dir, str(i), image), 0) for i in range(402) for image in os.listdir(os.path.join(self.fake_dir, str(i)))]
+        self.real_images = [(os.path.join(self.real_dir, str(i), img), 1) for i in range(402) if os.path.exists(os.path.join(self.real_dir, str(i))) for img in os.listdir(os.path.join(self.real_dir, str(i)))]
+        self.fake_images = [(os.path.join(self.fake_dir, str(i), img), 0) for i in range(402) if os.path.exists(os.path.join(self.fake_dir, str(i))) for img in os.listdir(os.path.join(self.fake_dir, str(i)))]
         self.total_images = self.real_images + self.fake_images
 
     def __len__(self):
@@ -25,18 +23,6 @@ class SignatureDataset(Dataset):
         if self.transform:
             image = self.transform(image)
         return image, label
-
-# transform = transforms.Compose([
-#     transforms.Resize((224, 224)),  # Resize images to fit ResNet input size
-#     transforms.ToTensor(),
-#     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])  # ImageNet standards
-# ])
-
-# dataset = SignatureDataset("/path/to/real_signatures", "/path/to/fake_signatures", transform=transform)
-
-# batch_size = 32  # Adjust based on your needs
-
-# dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
 # 主函数
 if __name__ == '__main__':
